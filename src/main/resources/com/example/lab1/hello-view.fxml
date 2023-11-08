@@ -7,7 +7,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lab1.HelloController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="900.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.lab1.HelloController">
     <children>
         <Button fx:id="TestButton" layoutX="429.0" layoutY="440.0" mnemonicParsing="false" onMouseClicked="#onTestButtonClick" text="Button" />
         <Label fx:id="TestLabel" layoutX="387.0" layoutY="328.0" prefHeight="45.0" prefWidth="136.0" text="Label" />

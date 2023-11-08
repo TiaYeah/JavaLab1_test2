@@ -28,11 +28,20 @@ public class ClientConnection extends Thread {
         try {
             while (true) {
                 ClientMessage clientMessage = (ClientMessage) in.readObject();
+
                 server.updateModel(clientMessage);
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
         } catch (ClassNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void send(Model sendModel) {
+        try {
+            out.writeObject(new CurrentState(sendModel));
+        } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }

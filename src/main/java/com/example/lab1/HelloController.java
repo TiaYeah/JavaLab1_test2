@@ -137,7 +137,14 @@ public class HelloController {
 
     private void sendMessage(ClientMessage clientMessage) {
         try {
-            outObject.writeObject(clientMessage);
+            System.out.println("Имя в модели " + model.currentTurn);
+            System.out.println("Имя в классе " + name);
+
+            if (model.currentTurn != null && model.currentTurn.equals(name)) {
+                System.out.println("Я могу");
+                outObject.writeObject(clientMessage);
+            }
+            //outObject.writeObject(clientMessage);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -149,6 +156,7 @@ public class HelloController {
                 CurrentState currentState = (CurrentState) inObject.readObject();
                 System.out.println();
                 currentState.model.printModel();
+                model = currentState.model;
                 //model = (Model)inObject.readObject();
                 //model.printModel();
                 //System.out.println(model.currentTurn);

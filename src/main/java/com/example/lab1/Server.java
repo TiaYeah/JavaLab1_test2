@@ -38,17 +38,20 @@ public class Server {
         Random random = new Random();
         String startName = "Игрок" + (random.nextInt(2) + 1);
         model.currentTurn = startName;
+        System.out.println(startName);
         sendModel();
         System.out.println("Игра началась");
     }
 
     void sendModel() {
         try {
-//            for (ClientConnection connection : clientConnections) {
-//                connection.out.writeObject(model);
-//            }
-            clientConnections.get(0).out.writeObject(new CurrentState(model));
-            clientConnections.get(1).out.writeObject(new CurrentState(model));
+            for (ClientConnection connection : clientConnections) {
+                connection.out.reset();
+                connection.out.writeObject(new CurrentState(model));
+            }
+            //clientConnections.get(0).out.writeObject(new CurrentState(model));
+            //clientConnections.get(0).send(model);
+            //clientConnections.get(1).out.writeObject(new CurrentState(model));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -59,7 +62,8 @@ public class Server {
         int j = clientMessage.xTurn;
 
         model.field[i][j] = clientMessage.from;
-        model.currentTurn = "lox";
+        model.field[1][2] = clientMessage.from;
+        //model.currentTurn = "lox";
         model.printModel();
         sendModel();
     }
