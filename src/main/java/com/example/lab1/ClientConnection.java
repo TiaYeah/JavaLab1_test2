@@ -38,11 +38,4 @@ public class ClientConnection extends Thread {
         }
     }
 
-    public void send(Model sendModel) {
-        try {
-            out.writeObject(new CurrentState(sendModel));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

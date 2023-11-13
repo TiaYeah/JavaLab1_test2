@@ -24,7 +24,7 @@ public class Server {
                 Socket clientSocket = listenSocket.accept(); // listen for new connection
                 String name = "Игрок" + (clientConnections.size() + 1);
                 ClientConnection clientConnection = new ClientConnection(clientSocket, this, name);
-                clientConnections.add(clientConnection); // launch new thread
+                clientConnections.add(clientConnection);
                 if (clientConnections.size() == 2) {
                     startGame();
                 }
@@ -38,7 +38,7 @@ public class Server {
         Random random = new Random();
         String startName = "Игрок" + (random.nextInt(2) + 1);
         model.currentTurn = startName;
-        System.out.println(startName);
+        model.firstPlayerName = startName;
         sendModel();
         System.out.println("Игра началась");
     }
@@ -47,11 +47,8 @@ public class Server {
         try {
             for (ClientConnection connection : clientConnections) {
                 connection.out.reset();
-                connection.out.writeObject(new CurrentState(model));
+                connection.out.writeObject(model);
             }
-            //clientConnections.get(0).out.writeObject(new CurrentState(model));
-            //clientConnections.get(0).send(model);
-            //clientConnections.get(1).out.writeObject(new CurrentState(model));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -62,9 +59,11 @@ public class Server {
         int j = clientMessage.xTurn;
 
         model.field[i][j] = clientMessage.from;
-        model.field[1][2] = clientMessage.from;
-        //model.currentTurn = "lox";
-        model.printModel();
+        if (model.doTurn(i, j)) {
+            model.remainderTurns = 0;
+            model.winnerName = clientMessage.from;
+            model.currentTurn = "Игра окончена";
+        }
         sendModel();
     }
 }
