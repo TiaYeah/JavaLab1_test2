@@ -4,7 +4,9 @@ import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.effect.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -38,16 +40,33 @@ public class ClientController {
     private Circle turnCircle2;
     @FXML
     private AnchorPane anchorPane;
-
+    @FXML
+    private TextField adressField;
+    @FXML
+    private Button connectButoon;
 
     @FXML
     void initialize() {
         int serverPort = 8080;
         String serverHost = "127.0.0.1";
-        connect(serverHost, serverPort);
+        //connect(serverHost, serverPort);
 
         addCircles();
 
+//        new Thread(() -> {
+//            while (true) {
+//                receiveMessage();
+//            }
+//        }).start();
+    }
+    public void onConnectButtonClicked(){
+        String ip = adressField.getText();
+        int portPos = ip.lastIndexOf(':');
+        int port = Integer.parseInt(ip.substring(portPos + 1));
+
+
+        ip = ip.substring(0, portPos);
+        connect(ip, port);
         new Thread(() -> {
             while (true) {
                 receiveMessage();
